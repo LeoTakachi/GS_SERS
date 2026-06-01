@@ -39,9 +39,10 @@ O sistema utiliza estruturas condicionais (if/else) para analisar diferentes cen
 ### Caso 1 - Superaquecimento
 
 Se:
-Temperatura > 80°C /
-Energia > 20% /
-Comunicação ativa / 
+
+* Temperatura > 80°C 
+* Energia > 20% 
+* Comunicação ativa 
 
 Resultado:⚠️ Alerta de superaquecimento!
 
@@ -50,9 +51,11 @@ Resultado:⚠️ Alerta de superaquecimento!
 ### Caso 2 - Baixa Energia
 
 Se:
-Temperatura ≤ 80°C
-Energia < 20%
-Comunicação ativa
+
+* Temperatura ≤ 80°C
+* Energia < 20%
+* Comunicação ativa
+  
 Resultado:🔋 Modo de Economia de energia ligado!
 
 ---
@@ -60,9 +63,11 @@ Resultado:🔋 Modo de Economia de energia ligado!
 ### Caso 3 - Falha de Comunicação
 
 Se:
-Temperatura ≤ 80°C
-Energia > 20%
-Comunicação inativa
+
+* Temperatura ≤ 80°C
+* Energia > 20%
+* Comunicação inativa
+  
 Resultado:📡 Falha na Comunicação!
 
 ---
