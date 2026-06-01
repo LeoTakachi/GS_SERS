@@ -39,9 +39,10 @@ O sistema utiliza estruturas condicionais (if/else) para analisar diferentes cen
 ### Caso 1 - Superaquecimento
 
 Se:
-Temperatura > 80°C
-Energia > 20%
-Comunicação ativa
+Temperatura > 80°C /
+Energia > 20% /
+Comunicação ativa / 
+
 Resultado:⚠️ Alerta de superaquecimento!
 
 ---
