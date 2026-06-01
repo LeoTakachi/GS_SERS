@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento Espacial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Montserrat:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Krona One', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .titulo {
+            text-align: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: #8b9dc3;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-modulo {
+            font-size: 20px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .form-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            margin-top: 7px;
+            margin-bottom: 5px;
+            font-size: 20px;
+        }
+
+        .titulo-temperatura {
+            color: #ff6b6b;
+        }
+
+        .titulo-energia {
+            color: #ffd93d;
+        }
+
+        .titulo-comunicacao {
+            color: #6bcbff;
+        }
+
+        .caixa-input, select {
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            background: #242424;
+            color: white;
+            font-size: 15px;
+        }
+
+        .caixa-input:focus, select:focus {
+            outline: 2px solid #00d4ff;
+        }
+
+        .linha-resultado {
+            margin-top: 7px;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .linha-resultado span {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .btn-iniciarsessao, .btn-reiniciarsessao {
+            margin: 20px auto 0 auto;
+            display: block;
+            padding: 14px;
+            width: 100%;
+            max-width: 250px;
+            border: none;
+            border-radius: 10px;
+            background: #22c55e;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .btn-reiniciarsessao {
+            background: #ef4444;
+            margin-top: 15px;
+        }
+
+        .btn-iniciarsessao:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+
+        .btn-reiniciarsessao:hover {
+            background: #dc2626;
+            transform: scale(1.02);
+        }
+
+        .historico-box {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .historico-box h4 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .historico-lista {
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 14px;
+            font-family: 'Montserrat', monospace;
+            color: #ccc;
+        }
+
+        .historico-lista p {
+            padding: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="titulo">🚀 Missão Espacial Experimental</h1>
+        <p class="subtitulo">Sistema Inteligente de Monitoramento de Energias Renováveis</p>
+    
+        <div class="card">
+            <h3>📋 Preencha os valores:</h3>
+            <div class="status-modulo">
+                <div class="form-card">
+                    <label class="titulo-temperatura">🌡️ Temperatura (°C):</label>
+                    <input class="caixa-input" type="number" id="temperatura" placeholder="Ex: 50" required>
+
+                    <label class="titulo-energia">⚡ Energia (%):</label>
+                    <input class="caixa-input" type="number" id="energia" placeholder="Ex: 10" required>
+
+                    <label class="titulo-comunicacao">📡 Status Comunicação:</label>
+                    <select id="statusComunicacao">
+                        <option value="1">Ativa</option>
+                        <option value="0">Inativa</option>
+                    </select>
+                </div>
+
+                <button class="btn-iniciarsessao" id="btnIniciarSessao">🚀 Iniciar Sessão</button>
+            </div>
+
+            <br>
+            <h3>🎯 Resultado da Sessão:</h3>
+            <div class="status-modulo">
+                <p class="linha-resultado">🌡️ Temperatura: <span id="resultTemperatura">--</span> °C</p>
+                <p class="linha-resultado">⚡ Energia: <span id="resultEnergia">--</span> %</p>
+                <p class="linha-resultado">📡 Status da Comunicação: <span id="resultComunicacao">--</span></p>
+                <p class="linha-resultado">📊 Status da Operação: <span id="resultOperacao">--</span></p>
+
+                <button class="btn-reiniciarsessao" id="btnReiniciarSessao">🔄 Reiniciar Sessão</button>
+            </div>   
+        </div>
+
+        <div class="historico-box">
+            <h4>📜 Histórico de Leituras</h4>
+            <div class="historico-lista" id="historicoLista">
+                <p style="color:#888;">Nenhuma leitura realizada ainda.</p>
+            </div>
+            <button id="btnExibirHistorico" style="margin-top: 10px; padding: 8px; background:#3b82f6; border:none; border-radius:8px; color:white; cursor:pointer; width:100%;">📋 Exibir Histórico Completo</button>
+        </div>
+    </div>
+
+    <script>
+        // Lista para armazenar o histórico
+        let historicoLeituras = [];
+
+        // pegando variáveis.
+        const inputTemperatura = document.getElementById('temperatura');
+        const inputEnergia = document.getElementById('energia');
+        const selectComunicacao = document.getElementById('statusComunicacao');
+        const btnIniciar = document.getElementById('btnIniciarSessao');
+        const btnReiniciar = document.getElementById('btnReiniciarSessao');
+        const btnExibirHistorico = document.getElementById('btnExibirHistorico');
+
+        // Pegando variáveis de resultado
+        const spanTemperatura = document.getElementById('resultTemperatura');
+        const spanEnergia = document.getElementById('resultEnergia');
+        const spanComunicacao = document.getElementById('resultComunicacao');
+        const spanOperacao = document.getElementById('resultOperacao');
+        const historicoListaDiv = document.getElementById('historicoLista');
+
+        // Função para obter o status da comunicação como texto
+        function getStatusTexto(valor) {
+            return valor == 1 ? "✅ Ativa" : "❌ Inativa";
+        }
+
+        // Função para analisar a missão e retornar a mensagem de status
+        function analisarMissao(temp, ener, comm) {
+            // Conversão para números
+            let t = Number(temp);
+            let e = Number(ener);
+            let c = Number(comm);
+
+            if (t > 80 && e > 20 && c === 1) {
+                return "⚠️ Alerta de superaquecimento!";
+            } else if (t <= 80 && e < 20 && c === 1) {
+                return "🔋 Modo de Economia de energia ligado!";
+            } else if (t <= 80 && e > 20 && c === 0) {
+                return "📡 Falha na Comunicação!";
+            } else if (t > 80 && e < 20 && c === 1) {
+                return "⚠️🔥 Alerta de superaquecimento e Modo de Economia de energia ligado!";
+            } else if (t > 80 && e > 20 && c === 0) {
+                return "⚠️📡 Alerta de superaquecimento e falha na Comunicação!";
+            } else if (t <= 80 && e < 20 && c === 0) {
+                return "🔋📡 Modo de Economia de energia ligado e falha na Comunicação!";
+            } else if (t > 80 && e < 20 && c === 0) {
+                return "⚠️🔋📡 Alerta de superaquecimento, Modo de Economia de energia ligado e falha na Comunicação!";
+            } else {
+                return "✅ Status da missão válidos! Nave pronta para prosseguir!";
+            }
+        }
+
+        // Função para atualizar a tela com os dados da última leitura
+        function atualizarTela(dados) {
+            spanTemperatura.textContent = dados.temp;
+            spanEnergia.textContent = dados.energia;
+            spanComunicacao.textContent = getStatusTexto(dados.comunicacao);
+            
+            const mensagemOperacao = analisarMissao(dados.temp, dados.energia, dados.comunicacao);
+            spanOperacao.textContent = mensagemOperacao;
+        }
+
+        // Função para atualizar a lista visual do histórico
+        function atualizarHistoricoVisual() {
+            if (historicoLeituras.length === 0) {
+                historicoListaDiv.innerHTML = '<p style="color:#888;">Nenhuma leitura realizada ainda.</p>';
+                return;
+            }
+            
+            let html = '';
+            // Mostrar últimos 5 registros (mais recentes primeiro)
+            const ultimos = [...historicoLeituras].reverse().slice(0, 5);
+            for (let i = 0; i < ultimos.length; i++) {
+                const d = ultimos[i];
+                html += `<p>📌 ${d.temp}°C | ⚡${d.energia}% | ${getStatusTexto(d.comunicacao)}</p>`;
+            }
+            if (historicoLeituras.length > 5) {
+                html += `<p style="color:#888;">... +${historicoLeituras.length - 5} registros anteriores</p>`;
+            }
+            historicoListaDiv.innerHTML = html;
+        }
+
+        // Função principal para cadastrar e processar a sessão
+        function iniciarSessao() {
+            // Capturar valores
+            let temperatura = inputTemperatura.value.trim();
+            let energia = inputEnergia.value.trim();
+            let comunicacao = selectComunicacao.value;
+
+            // Validação de campos vazios
+            if (temperatura === "" || energia === "") {
+                alert("⚠️ Erro! Preencha os campos de Temperatura e Energia.");
+                return;
+            }
+
+            // Converter para números
+            let tempNum = Number(temperatura);
+            let energiaNum = Number(energia);
+            let commNum = Number(comunicacao);
+
+            // Validação se são números válidos
+            if (isNaN(tempNum) || isNaN(energiaNum)) {
+                alert("❌ Erro! Digite apenas números válidos para Temperatura e Energia.");
+                return;
+            }
+
+            // Validação de limites
+            if (tempNum < -50 || tempNum > 150) {
+                alert("⚠️ Atenção: Temperatura fora da faixa esperada (-50°C a 150°C). A missão pode ser comprometida.");
+            }
+            if (energiaNum < 0 || energiaNum > 100) {
+                alert("⚠️ Atenção: Energia fora da faixa esperada (0% a 100%).");
+            }
+
+            // guardando os dados em um dicionário
+            let leitura = {
+                temp: tempNum,
+                energia: energiaNum,
+                comunicacao: commNum,
+                timestamp: new Date().toLocaleTimeString()
+            };
+
+            // Adicionar ao histórico
+            historicoLeituras.push(leitura);
+            
+            // Atualizar a tela com os novos dados
+            atualizarTela(leitura);
+            
+            // Atualizar histórico visual
+            atualizarHistoricoVisual();
+        
+            // temperatura para próxima entrada
+            inputTemperatura.focus();
+        }
+
+        // Função para reiniciar a sessão (limpar tela)
+        function reiniciarSessao() {
+            if (historicoLeituras.length > 0) {
+                if (confirm("🚨 Tem certeza que deseja reiniciar a sessão? Todo o histórico será apagado.")) {
+                    historicoLeituras = [];
+                    spanTemperatura.textContent = "--";
+                    spanEnergia.textContent = "--";
+                    spanComunicacao.textContent = "--";
+                    spanOperacao.textContent = "--";
+                    atualizarHistoricoVisual();
+                    
+                    // limpa campos do formulário
+                    inputTemperatura.value = "";
+                    inputEnergia.value = "";
+                    selectComunicacao.value = "1";
+                    
+                    alert("🔄 Sessão reiniciada com sucesso!");
+                }
+            } else {
+                // Mesmo sem histórico, limpa a tela
+                spanTemperatura.textContent = "--";
+                spanEnergia.textContent = "--";
+                spanComunicacao.textContent = "--";
+                spanOperacao.textContent = "--";
+                inputTemperatura.value = "";
+                inputEnergia.value = "";
+                selectComunicacao.value = "1";
+                alert("🔄 Interface reiniciada. Nenhum histórico para apagar.");
+            }
+        }
+
+        // Função para exibir histórico detalhado
+        function exibirHistoricoDetalhado() {
+            if (historicoLeituras.length === 0) {
+                alert("📭 Nenhum dado no histórico. Faça uma leitura primeiro!");
+                return;
+            }
+            
+            let texto = "=== 📜 HISTÓRICO COMPLETO ===\n\n";
+            for (let i = 0; i < historicoLeituras.length; i++) {
+                let d = historicoLeituras[i];
+                let statusComm = d.comunicacao === 1 ? "Ativa" : "Inativa";
+                texto += `${i+1}. 🌡️ ${d.temp}°C | ⚡ ${d.energia}% | 📡 ${statusComm}\n`;
+                texto += `   📌 Análise: ${analisarMissao(d.temp, d.energia, d.comunicacao)}\n`;
+                if (d.timestamp) texto += `   🕒 ${d.timestamp}\n`;
+                texto += "--------------------------------\n";
+            }
+            alert(texto);
+        }
+
+        // --- EVENTOS ---
+        btnIniciar.addEventListener('click', iniciarSessao);
+        btnReiniciar.addEventListener('click', reiniciarSessao);
+        btnExibirHistorico.addEventListener('click', exibirHistoricoDetalhado);
+
+
+        // Mensagem de boas-vindas no console
+        console.log("🚀 Sistema de Monitoramento Espacial conectado e pronto!");
+    </script>
+</body>
+</html>
