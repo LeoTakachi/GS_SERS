@@ -104,6 +104,12 @@ A função de reinicialização:
 
 ---
 
+## 🎬 Demonstração
+
+Vídeo de demonstração prática do sistema: https://youtu.be/0vVOuCI32kA
+
+---
+
 ## 📌 Conclusão
 
 O principal objetivo do sistema é mostrar que através da análise automática dos parâmetros da missão, é possível identificar situações críticas, gerar alertas e auxiliar na tomada de decisão, simulando cenários reais encontrados em operações espaciais e sistemas embarcados.
