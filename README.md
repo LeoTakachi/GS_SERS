@@ -97,9 +97,9 @@ Com isso, o histórico permite acompanhar a evolução dos parâmetros monitorad
 
 A função de reinicialização:
 
-* Limpa o histórico;
-* Limpa os campos do formulário;
-* Remove os resultados exibidos;
+* Limpa o histórico
+* Limpa os campos do formulário
+* Remove os resultados exibidos
 * Retorna a interface ao estado inicial.
 
 ---
